@@ -18,30 +18,6 @@ const RegisterSchema = Yup.object().shape({
 
 const DoctorRegister = () => {
   return (
-    // <div className="min-h-screen flex justify-center items-center bg-gradient-to-r from-[#15163d] to-[#262759] p-6 font-sans">
-
-    //   <div className="flex flex-col md:flex-row items-start max-w-6xl w-full">
-
-        
-        
-    //         <div className="float">
-    //             <img src={doctorImg} alt="doctor" className="w-100" />
-    //         </div>
-          
-       
-
-    //     {/* Right Register Card */}
-    //     <div className="md:w-1/2 bg-white shadow-2xl rounded-[30px] px-10 py-10 w-full max-w-md">
-
-    //       <h2 className="text-3xl text-center font-extrabold text-[#3b3d7a] mb-8">
-    //         Register
-    //       </h2>
-
-          
-
-    //     </div>
-    //   </div>
-    // </div>
     <div className="min-h-screen flex bg-gradient-to-r from-[#15163d] to-[#262759] font-sans">
 
   {/* FIXED LEFT PANEL */}
