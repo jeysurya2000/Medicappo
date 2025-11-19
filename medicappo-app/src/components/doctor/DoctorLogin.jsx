@@ -1,6 +1,7 @@
 import doctorImg from "../../assets/doctor.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
+import {Link} from 'react-router-dom'
 
 // Simple Validation Schema
 const DoctorLoginSchema = Yup.object().shape({
@@ -128,9 +129,9 @@ const DoctorLogin = () => {
           {/* Register Link */}
           <p className="mt-6 text-center text-sm text-gray-700">
             Don’t have an account?{" "}
-            <a href="#" className="text-[#4e46c3] font-semibold hover:underline">
+            <Link to="/doctorRegister" className="text-[#4e46c3] font-semibold hover:underline">
               Register Now
-            </a>
+            </Link>
           </p>
 
         </div>
