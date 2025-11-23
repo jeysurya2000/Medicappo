@@ -5,7 +5,6 @@ const DoctorSchema = new mongoose.Schema(
     designation: { type: String, required: true },
     email: { type: String, required: true },
     password: { type: String, required: true },
-    confirmPassword: { type: String, required: true },
     phNo: { type: String, required: true },
   },
   { timestamps: true }
