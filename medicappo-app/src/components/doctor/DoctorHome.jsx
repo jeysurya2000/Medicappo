@@ -17,13 +17,18 @@ const data = [
   { day: "Friday", value: 2700 },
   { day: "Saturday", value: 2000 },
 ];
+const cardItems = [
+  { title: "Total Appointments", count: 100 },
+  { title: "Pending Appointments", count: 10 },
+  { title: "Confirmed Appointments", count: 90 },
+];
 
 const DoctorHome = () => {
   return (
     <>
-      <div className="w-full px-6 py-3 space-y-10">
+      <div className="container w-full space-y-10 px-6 py-3">
         {/* Breadcrumbs */}
-        <nav className="flex items-center text-gray-300 text-sm space-x-2">
+        <nav className="flex items-center space-x-2 text-sm text-gray-300">
           <span className="flex items-center gap-2 opacity-75">
             <FaHome className="text-base" />
             Home
@@ -33,37 +38,32 @@ const DoctorHome = () => {
             <RxSlash />
           </span>
 
-          <span className="flex items-center gap-2 text-white font-bold">
+          <span className="flex items-center gap-2 font-bold text-white">
             <RxDashboard className="text-base" />
             Dashboard
           </span>
         </nav>
 
         {/* Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          <div className="bg-blue-700 text-white p-6 rounded-xl shadow-xl">
-            <h4 className="text-lg font-semibold">Total Appointments</h4>
-            <p className="text-3xl font-bold mt-3">100</p>
-          </div>
-
-          <div className="bg-blue-700 text-white p-6 rounded-xl shadow-xl">
-            <h4 className="text-lg font-semibold">Pending Appointments</h4>
-            <p className="text-3xl font-bold mt-3">10</p>
-          </div>
-
-          <div className="bg-blue-700 text-white p-6 rounded-xl shadow-xl">
-            <h4 className="text-lg font-semibold">Confirmed Appointments</h4>
-            <p className="text-3xl font-bold mt-3">90</p>
-          </div>
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-3">
+          {cardItems.map((card, index) => (
+            <div
+              className="rounded-xl bg-blue-700 p-6 text-white shadow-xl"
+              key={card.title}
+            >
+              <h4 className="text-lg font-semibold">{card.title}</h4>
+              <p className="mt-3 text-3xl font-bold">{card.count}</p>
+            </div>
+          ))}
         </div>
 
         {/* Graph Section */}
-        <div className="bg-blue-800 flex flex-col gap-8 items-center text-white p-6 rounded-xl shadow-xl w-full h-[380px]">
-          <h3 className="text-center text-lg font-semibold my-3">
+        <div className="flex h-[380px] w-full flex-col items-center gap-8 rounded-xl bg-blue-800 p-6 text-white shadow-xl">
+          <h3 className="my-3 text-center text-lg font-semibold">
             Weekly Appointment Insights
           </h3>
 
-          <div className="flex justify-center w-full h-full">
+          <div className="flex h-full w-full justify-center">
             <ResponsiveContainer width="85%" height="100%">
               <LineChart data={data}>
                 <CartesianGrid
