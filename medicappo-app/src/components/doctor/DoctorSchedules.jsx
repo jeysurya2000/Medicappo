@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { FaEdit, FaTrash, FaCheck, FaTimes, FaPlus } from "react-icons/fa";
 
 const DoctorSchedules = () => {
   const todayString = new Date().toISOString().split("T")[0];
@@ -108,6 +109,7 @@ const DoctorSchedules = () => {
         <h1 className="mb-6 text-center text-2xl font-bold text-sky-300 sm:text-3xl">
           Doctor Schedules
         </h1>
+        <hr className="mb-5" />
 
         <div className="mb-6 flex justify-center">
           <input
@@ -120,11 +122,11 @@ const DoctorSchedules = () => {
         </div>
 
         {activeDate && (
-          <table className="w-full border-collapse rounded-xl bg-[#0B1A3A] text-white shadow-lg">
+          <table className="w-full border-collapse rounded-xl bg-[#0B1A3A] text-left text-white shadow-lg">
             <thead>
-              <tr className="bg-[#07133B] text-left text-sky-300">
+              <tr className="bg-[#07133B] text-sky-300 md:text-left">
                 <th className="p-4 text-sm font-semibold sm:text-base">Slot</th>
-                <th className="p-4 text-sm font-semibold sm:text-base">
+                <th className="p-4 text-center text-sm font-semibold sm:text-base">
                   Actions
                 </th>
               </tr>
@@ -167,37 +169,59 @@ const DoctorSchedules = () => {
                   </td>
                   <td>
                     {editIndex === index ? (
-                      <div className="flex flex-1 flex-row gap-2 sm:flex-none">
+                      <div className="flex justify-center gap-2">
+                        {/* Save */}
                         <button
-                          className="flex-1 rounded-lg bg-green-600 px-3 py-1 text-white hover:bg-green-500 sm:flex-none"
+                          title="Save"
                           onClick={saveSlot}
+                          className="flex items-center justify-center rounded bg-green-600 px-2 py-1 text-white hover:bg-green-500 sm:px-3 sm:py-1 sm:text-sm"
                         >
-                          Save
+                          <span className="sm:hidden">
+                            <FaCheck />
+                          </span>
+                          <span className="hidden sm:inline">Save</span>
                         </button>
+
+                        {/* Cancel */}
                         <button
-                          className="flex-1 rounded-lg bg-gray-600 px-3 py-1 text-white hover:bg-gray-500 sm:flex-none"
+                          title="Cancel"
                           onClick={() => {
                             setEditIndex(null);
                             setEditValue("");
                             setEditError("");
                           }}
+                          className="flex items-center justify-center rounded bg-gray-600 px-2 py-1 text-white hover:bg-gray-500 sm:px-3 sm:py-1 sm:text-sm"
                         >
-                          Cancel
+                          <span className="sm:hidden">
+                            <FaTimes />
+                          </span>
+                          <span className="hidden sm:inline">Cancel</span>
                         </button>
                       </div>
                     ) : (
-                      <div className="flex flex-1 flex-row gap-2 sm:flex-none">
+                      <div className="flex justify-center gap-2">
+                        {/* Edit */}
                         <button
-                          className="flex-1 rounded-lg bg-sky-600 px-3 py-1 text-white hover:bg-sky-500 sm:flex-none"
+                          title="Edit"
                           onClick={() => startEdit(index, slot)}
+                          className="flex items-center justify-center rounded bg-sky-600 px-2 py-1 text-white hover:bg-sky-500 sm:px-3 sm:py-1 sm:text-sm"
                         >
-                          Edit
+                          <span className="sm:hidden">
+                            <FaEdit />
+                          </span>
+                          <span className="hidden sm:inline">Edit</span>
                         </button>
+
+                        {/* Delete */}
                         <button
-                          className="flex-1 rounded-lg bg-red-600 px-3 py-1 text-white hover:bg-red-500 sm:flex-none"
+                          title="Delete"
                           onClick={() => deleteSlot(index)}
+                          className="flex items-center justify-center rounded bg-red-600 px-2 py-1 text-white hover:bg-red-500 sm:px-3 sm:py-1 sm:text-sm"
                         >
-                          Delete
+                          <span className="sm:hidden">
+                            <FaTrash />
+                          </span>
+                          <span className="hidden sm:inline">Delete</span>
                         </button>
                       </div>
                     )}
@@ -206,37 +230,61 @@ const DoctorSchedules = () => {
               ))}
 
               {/* Add New Slot Row */}
-              <tr className="border-t border-slate-700">
-                <td className="flex flex-col p-4">
-                  <input
-                    type="time"
-                    value={newSlot}
-                    onChange={(e) => setNewSlot(e.target.value)}
-                    className="rounded-lg bg-slate-800 px-2 py-1 text-white accent-sky-400"
-                  />
-                  {addError && (
-                    <span className="mt-1 text-sm text-red-400">
-                      {addError}
-                    </span>
-                  )}
-                </td>
-                <td className="flex flex-wrap gap-2 p-4">
-                  <button
-                    onClick={addNewSlot}
-                    className="flex-1 rounded-lg bg-green-600 px-3 py-1 text-white hover:bg-green-500 sm:flex-none"
-                  >
-                    Add
-                  </button>
-                  {newSlot && (
-                    <button
-                      onClick={() => setNewSlot("")}
-                      className="flex-1 rounded-lg bg-gray-600 px-3 py-1 text-white hover:bg-gray-500 sm:flex-none"
-                    >
-                      Clear
-                    </button>
-                  )}
+              {/* Add Time Slot Header */}
+              <tr>
+                <td
+                  colSpan={2} // spans both columns
+                  className="px-4 py-6 text-2xl font-bold text-white"
+                >
+                  Add Time Slot
                 </td>
               </tr>
+              {activeDate && (
+                <tr className="border-t border-slate-700">
+                  <td className="flex flex-col py-3">
+                    <input
+                      type="time"
+                      value={newSlot}
+                      onChange={(e) => setNewSlot(e.target.value)}
+                      className="rounded-lg bg-slate-800 px-2 py-1 text-white accent-sky-400"
+                    />
+                    {addError && (
+                      <span className="mt-1 text-sm text-red-400">
+                        {addError}
+                      </span>
+                    )}
+                  </td>
+                  <td className="flex flex-wrap gap-2">
+                    {/* Add */}
+                    <button
+                      title="Add"
+                      onClick={addNewSlot}
+                      className="flex items-center rounded bg-green-600 px-2 py-1 text-sm text-white hover:bg-green-500 sm:px-3 sm:py-1 sm:text-sm"
+                    >
+                      <span className="sm:hidden">
+                        <FaPlus />
+                      </span>
+                      <span className="text-md px-3 py-1 font-bold sm:inline">
+                        Add
+                      </span>
+                    </button>
+
+                    {/* Clear */}
+                    {newSlot && (
+                      <button
+                        title="Clear"
+                        onClick={() => setNewSlot("")}
+                        className="flex items-center justify-center rounded bg-gray-600 px-2 py-1 text-white hover:bg-gray-500 sm:px-3 sm:py-1 sm:text-sm"
+                      >
+                        <span className="sm:hidden">
+                          <FaTimes />
+                        </span>
+                        <span className="hidden sm:inline">Clear</span>
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              )}
             </tbody>
           </table>
         )}
