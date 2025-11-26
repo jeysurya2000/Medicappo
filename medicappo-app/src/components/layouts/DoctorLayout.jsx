@@ -75,13 +75,34 @@ const DoctorLayout = () => {
           </button>
 
           {/* Desktop Right Buttons */}
-          <div className="hidden items-center gap-4 font-bold md:flex">
-            <button className="w-fit rounded-lg bg-red-500 px-4 py-1.5 text-sm hover:bg-red-600">
-              Logout
-            </button>
-            <button className="rounded-lg bg-purple-500 px-4 py-1.5 text-sm hover:bg-purple-600">
-              Sign up
-            </button>
+          {/* Desktop Right — Profile Dropdown */}
+          <div className="relative hidden items-center gap-4 md:flex">
+            <div className="group flex cursor-pointer items-center gap-2">
+              {/* Profile Image */}
+              <img
+                src="https://i.pravatar.cc/100?img=15"
+                alt="profile"
+                className="h-9 w-9 rounded-full border-2 border-sky-300"
+              />
+
+              {/* User Name */}
+              <span className="font-semibold text-sky-300">Dr. Jey</span>
+
+              {/* Dropdown */}
+              <div className="absolute top-10 right-0 z-[500] hidden w-40 rounded-lg border border-slate-700 bg-[#0B1A3A] p-2 shadow-xl group-hover:block">
+                <ul className="flex flex-col text-sm">
+                  <li className="cursor-pointer rounded px-3 py-2 hover:bg-slate-700">
+                    Profile
+                  </li>
+                  <li className="cursor-pointer rounded px-3 py-2 hover:bg-slate-700">
+                    Settings
+                  </li>
+                  <li className="cursor-pointer px-3 py-2 text-red-400 hover:bg-slate-700">
+                    Logout
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </nav>
 
