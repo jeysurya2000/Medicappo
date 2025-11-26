@@ -20,7 +20,7 @@ const DoctorLayout = () => {
 
   return (
     <>
-      <div className="flex min-h-screen flex-col bg-gradient-to-b from-slate-900 to-slate-800 text-white">
+      <div className="flex min-h-screen flex-col bg-linear-to-b from-slate-900 to-slate-800 text-white">
         {/* NAVBAR */}
         <nav className="sticky top-0 z-50 flex w-full items-center justify-between bg-[#07133B] px-6 py-4 shadow-lg">
           {/* Logo */}
@@ -92,7 +92,7 @@ const DoctorLayout = () => {
               </div>
 
               {/* Dropdown */}
-              <div className="absolute top-10 right-0 z-[500] hidden w-40 rounded-lg border border-slate-700 bg-[#0B1A3A] p-2 shadow-xl group-hover:block">
+              <div className="absolute top-10 right-0 z-500 hidden w-40 rounded-lg border border-slate-700 bg-[#0B1A3A] p-2 shadow-xl group-hover:block">
                 <ul className="flex flex-col text-sm">
                   <li className="cursor-pointer rounded px-3 py-2 hover:bg-slate-700">
                     Signup

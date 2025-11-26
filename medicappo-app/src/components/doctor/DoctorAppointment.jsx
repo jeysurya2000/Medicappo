@@ -92,7 +92,7 @@ const DoctorAppointment = () => {
   return (
     <div className="flex w-full flex-col items-center pb-6">
       {/* Sticky Month Header */}
-      <div className="sticky top-[var(--navbar-height,0px)] mb-4 flex w-full items-center justify-center gap-5 bg-[#0B0F33]/90 py-3 backdrop-blur-md">
+      <div className="sticky top-(--navbar-height,0px) mb-4 flex w-full items-center justify-center gap-5 bg-[#0B0F33]/90 py-3 backdrop-blur-md">
         <button onClick={prevMonth} className="text-2xl text-white">
           ❮
         </button>
@@ -191,7 +191,7 @@ const DoctorAppointment = () => {
                             return (
                               <div
                                 key={slot}
-                                className={`flex items-center gap-1 rounded px-2 py-[2px] ${
+                                className={`flex items-center gap-1 rounded px-2 py-0.5 ${
                                   disabled
                                     ? "bg-gray-200 text-gray-500"
                                     : "bg-blue-200 text-blue-900"
@@ -204,7 +204,7 @@ const DoctorAppointment = () => {
                           })}
 
                           {timeSlots.length > 2 && (
-                            <div className="rounded bg-blue-200 px-2 py-[2px] text-blue-800">
+                            <div className="rounded bg-blue-200 px-2 py-0.5 text-blue-800">
                               <Link>+{timeSlots.length - 2} more</Link>
                             </div>
                           )}
@@ -224,7 +224,7 @@ const DoctorAppointment = () => {
                             return (
                               <div
                                 key={slot}
-                                className={`flex items-center gap-1 rounded px-2 py-[2px] ${
+                                className={`flex items-center gap-1 rounded px-2 py-0.5 ${
                                   disabled
                                     ? "bg-gray-200 text-gray-500"
                                     : "bg-blue-200 text-blue-900"
