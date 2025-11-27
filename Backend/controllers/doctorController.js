@@ -70,11 +70,7 @@ const login = async (req, res) => {
     return res.json({
       message: "Logged In Successfully",
       token,
-      user: {
-        id: doctorUser._id,
-        name: doctorUser.name,
-        email: doctorUser.email,
-      },
+      doctorUser,
     });
   } catch (err) {
     console.error(err);
