@@ -2,9 +2,10 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import doctorImg from "../../assets/doctor.png";
 import { Link } from "react-router-dom";
-import { apiClient } from "../../utils/server";
+import apiClient from "../../utils/server"; // ✅ Correct import
 import logo from "../../assets/Logo.png";
 
+// Schema
 const RegisterSchema = Yup.object().shape({
   doctorName: Yup.string().required("Doctor name is required"),
   designation: Yup.string().required("Select your designation"),
@@ -20,11 +21,12 @@ const RegisterSchema = Yup.object().shape({
     .required("Mobile number is required"),
 });
 
+// Submit Handler
 const handleSubmit = async (values, resetForm) => {
   try {
     const response = await apiClient.post("/doctor/register", values);
 
-    alert("Registration successful!");
+    alert(response.data.message || "Registration successful!");
     resetForm();
   } catch (error) {
     console.error("Registration failed:", error);
@@ -35,20 +37,20 @@ const handleSubmit = async (values, resetForm) => {
 const DoctorRegister = () => {
   return (
     <>
-      <div className="min-h-screen md:flex bg-gradient-to-r from-[#15163d] to-[#262759]">
-        <div className="md:hidden flex justify-center pt-5">
+      <div className="min-h-screen bg-linear-to-r from-[#15163d] to-[#262759] md:flex">
+        <div className="flex justify-center pt-5 md:hidden">
           <img src={logo} alt="doctor" className="w-40" />
         </div>
 
-        {/* FIXED LEFT PANEL */}
-        <div className="hidden md:flex flex-col items-center justify-center w-1/2 sticky top-0 h-screen">
+        {/* LEFT PANEL */}
+        <div className="sticky top-0 hidden h-screen w-1/2 flex-col items-center justify-center md:flex">
           <img src={doctorImg} alt="doctor" className="w-80" />
         </div>
 
-        {/* SCROLLABLE RIGHT FORM */}
-        <div className="w-full md:w-1/2 min-h-screen overflow-y-auto flex justify-center items-center py-10">
-          <div className="bg-white shadow-2xl rounded-[30px] px-10 py-10 w-full max-w-md">
-            <h2 className="text-3xl text-center font-extrabold text-[#3b3d7a] mb-8">
+        {/* FORM SECTION */}
+        <div className="flex min-h-screen w-full items-center justify-center overflow-y-auto py-10 md:w-1/2">
+          <div className="w-full max-w-md rounded-[30px] bg-white px-10 py-10 shadow-2xl">
+            <h2 className="mb-8 text-center text-3xl font-extrabold text-[#3b3d7a]">
               Register
             </h2>
 
@@ -76,12 +78,12 @@ const DoctorRegister = () => {
                     <Field
                       name="doctorName"
                       type="text"
-                      className="mt-1 w-full border border-purple-500 rounded-md px-3 py-2 outline-none"
+                      className="mt-1 w-full rounded-md border border-purple-500 px-3 py-2 outline-none"
                     />
                     <ErrorMessage
                       name="doctorName"
                       component="div"
-                      className="text-red-500 text-sm"
+                      className="text-sm text-red-500"
                     />
                   </div>
 
@@ -91,7 +93,7 @@ const DoctorRegister = () => {
                     <Field
                       name="designation"
                       as="select"
-                      className="mt-1 w-full border border-purple-500 rounded-md px-3 py-2 outline-none"
+                      className="mt-1 w-full rounded-md border border-purple-500 px-3 py-2 outline-none"
                     >
                       <option value="">Select designation</option>
                       <option value="General Doctor">General Doctor</option>
@@ -102,7 +104,7 @@ const DoctorRegister = () => {
                     <ErrorMessage
                       name="designation"
                       component="div"
-                      className="text-red-500 text-sm"
+                      className="text-sm text-red-500"
                     />
                   </div>
 
@@ -112,12 +114,12 @@ const DoctorRegister = () => {
                     <Field
                       name="email"
                       type="email"
-                      className="mt-1 w-full border border-purple-500 rounded-md px-3 py-2 outline-none"
+                      className="mt-1 w-full rounded-md border border-purple-500 px-3 py-2 outline-none"
                     />
                     <ErrorMessage
                       name="email"
                       component="div"
-                      className="text-red-500 text-sm"
+                      className="text-sm text-red-500"
                     />
                   </div>
 
@@ -127,12 +129,12 @@ const DoctorRegister = () => {
                     <Field
                       name="password"
                       type="password"
-                      className="mt-1 w-full border border-purple-500 rounded-md px-3 py-2 outline-none"
+                      className="mt-1 w-full rounded-md border border-purple-500 px-3 py-2 outline-none"
                     />
                     <ErrorMessage
                       name="password"
                       component="div"
-                      className="text-red-500 text-sm"
+                      className="text-sm text-red-500"
                     />
                   </div>
 
@@ -144,12 +146,12 @@ const DoctorRegister = () => {
                     <Field
                       name="confirmPassword"
                       type="password"
-                      className="mt-1 w-full border border-purple-500 rounded-md px-3 py-2 outline-none"
+                      className="mt-1 w-full rounded-md border border-purple-500 px-3 py-2 outline-none"
                     />
                     <ErrorMessage
                       name="confirmPassword"
                       component="div"
-                      className="text-red-500 text-sm"
+                      className="text-sm text-red-500"
                     />
                   </div>
 
@@ -161,31 +163,33 @@ const DoctorRegister = () => {
                     <Field
                       name="phNo"
                       type="text"
-                      className="mt-1 w-full border border-purple-500 rounded-md px-3 py-2 outline-none"
+                      className="mt-1 w-full rounded-md border border-purple-500 px-3 py-2 outline-none"
                     />
                     <ErrorMessage
                       name="phNo"
                       component="div"
-                      className="text-red-500 text-sm"
+                      className="text-sm text-red-500"
                     />
                   </div>
 
-                  {/* Register Button */}
+                  {/* Button */}
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full bg-[#5b5cae] text-white py-2 rounded-md text-lg font-semibold hover:bg-[#4c4da0] transition ${
-                      isSubmitting ? "opacity-50 cursor-not-allowed" : ""
+                    className={`w-full rounded-md bg-[#5b5cae] py-2 text-lg font-semibold text-white transition ${
+                      isSubmitting
+                        ? "cursor-not-allowed opacity-50"
+                        : "hover:bg-[#4c4da0]"
                     }`}
                   >
-                    Register
+                    {isSubmitting ? "Registering..." : "Register"}
                   </button>
 
-                  <p className="text-center text-sm mt-3">
-                    If Already have an account?{" "}
+                  <p className="mt-3 text-center text-sm">
+                    If already have an account?{" "}
                     <Link
                       to="/"
-                      className="text-[#4e46c3] font-semibold hover:underline"
+                      className="font-semibold text-[#4e46c3] hover:underline"
                     >
                       Login Now
                     </Link>

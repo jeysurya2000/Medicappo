@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useNavigate } from "react-router-dom";
 import logo from "../../assets/Logo.png";
 import {
   FaBars,
@@ -15,9 +15,18 @@ import {
 const DoctorLayout = () => {
   const [open, setOpen] = useState(false);
   const [mobileProfileOpen, setMobileProfileOpen] = useState(false);
+  const navigate = useNavigate();
 
   const doctorName = "Dr. Jey Yogesh";
 
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/");
+  };
+
+  const handleSignup = () => {
+    navigate("/doctorRegister");
+  };
   return (
     <>
       <div className="flex min-h-screen flex-col bg-linear-to-b from-slate-900 to-slate-800 text-white">
@@ -94,11 +103,24 @@ const DoctorLayout = () => {
               {/* Dropdown */}
               <div className="absolute top-10 right-0 z-500 hidden w-40 rounded-lg border border-slate-700 bg-[#0B1A3A] p-2 shadow-xl group-hover:block">
                 <ul className="flex flex-col text-sm">
-                  <li className="cursor-pointer rounded px-3 py-2 hover:bg-slate-700">
-                    Signup
+                  {/* Signup */}
+                  <li>
+                    <button
+                      className="w-full cursor-pointer rounded px-3 py-2 text-left hover:bg-slate-700"
+                      onClick={handleSignup}
+                    >
+                      Signup
+                    </button>
                   </li>
-                  <li className="cursor-pointer rounded px-3 py-2 text-red-400 hover:bg-slate-700">
-                    Logout
+
+                  {/* Logout */}
+                  <li>
+                    <button
+                      onClick={handleLogout}
+                      className="w-full cursor-pointer rounded px-3 py-2 text-left text-red-400 hover:bg-slate-700"
+                    >
+                      Logout
+                    </button>
                   </li>
                 </ul>
               </div>
@@ -197,7 +219,10 @@ const DoctorLayout = () => {
                     Signup
                   </button>
 
-                  <button className="w-full rounded-lg bg-red-500 px-4 py-2 text-sm font-bold hover:bg-red-600">
+                  <button
+                    className="w-full rounded-lg bg-red-500 px-4 py-2 text-sm font-bold hover:bg-red-600"
+                    onClick={handleLogout}
+                  >
                     Logout
                   </button>
                 </div>

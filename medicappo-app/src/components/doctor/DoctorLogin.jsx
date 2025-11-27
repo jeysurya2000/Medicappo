@@ -1,9 +1,11 @@
 import doctorImg from "../../assets/doctor.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import {Link} from 'react-router-dom'
+import { Link, useNavigate } from "react-router-dom";
+import apiClient from "../../utils/server";
+import { useEffect } from "react";
 
-// Simple Validation Schema
+// Validation Schema
 const DoctorLoginSchema = Yup.object().shape({
   email: Yup.string()
     .email("Invalid email format")
@@ -15,45 +17,39 @@ const DoctorLoginSchema = Yup.object().shape({
 });
 
 const DoctorLogin = () => {
+  const navigate = useNavigate();
 
-  // Simple local login check (no API)
-  const handleLogin = (values, { setSubmitting, resetForm }) => {
-    const validDoctor = {
-      email: "doctor@example.com",
-      password: "1234",
-    };
+  const handleLogin = async (values, { setSubmitting, resetForm }) => {
+    try {
+      const res = await apiClient.post("/doctor/login", values);
+      localStorage.setItem("token", res.data.token);
+      alert(res?.data.message);
+      resetForm();
 
-    if (
-      values.email === validDoctor.email &&
-      values.password === validDoctor.password
-    ) {
-      alert("Login Successful!");
-      console.log("Doctor Logged In:", values);
-    } else {
-      alert("Invalid email or password");
+      // Redirect user
+      navigate("/doctor/home");
+    } catch (error) {
+      alert(error.response?.data?.message || "Login failed");
+      console.error(error);
+    } finally {
+      setSubmitting(false);
     }
-
-    setSubmitting(false);
-    resetForm();
   };
 
   return (
-    <div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#1a1d4b] to-[#2b2f63] p-4 font-sans">
-
-      <div className="flex flex-col md:flex-row items-center w-full max-w-5xl">
-
-        <div className="md:w-1/2 flex flex-col items-center mb-10 md:mb-0">
+    <div className="flex min-h-screen w-full items-center justify-center bg-linear-to-br from-[#1a1d4b] to-[#2b2f63] p-4 font-sans">
+      <div className="flex w-full max-w-5xl flex-col items-center md:flex-row">
+        <div className="mb-10 flex flex-col items-center md:mb-0 md:w-1/2">
           <img
             src={doctorImg}
             alt="Doctor Illustration"
-            className="w-72 md:w-80 mt-6"
+            className="mt-6 w-72 md:w-80"
           />
         </div>
 
         {/* Form Section */}
-        <div className="md:w-1/2 bg-white rounded-3xl shadow-2xl px-10 py-12 max-w-md w-full">
-
-          <h2 className="text-center text-3xl font-extrabold text-[#3d3b66] mb-8">
+        <div className="w-full max-w-md rounded-3xl bg-white px-10 py-12 shadow-2xl md:w-1/2">
+          <h2 className="mb-8 text-center text-3xl font-extrabold text-[#3d3b66]">
             Doctor Login
           </h2>
 
@@ -64,7 +60,6 @@ const DoctorLogin = () => {
           >
             {({ isSubmitting }) => (
               <Form className="space-y-6">
-
                 {/* Email */}
                 <div>
                   <label className="text-sm font-semibold text-gray-700">
@@ -73,13 +68,13 @@ const DoctorLogin = () => {
                   <Field
                     type="email"
                     name="email"
-                    className="w-full mt-1 px-4 py-2 border border-[#6b6b93] rounded-md focus:ring-2 focus:ring-purple-400 outline-none"
+                    className="mt-1 w-full rounded-md border border-[#6b6b93] px-4 py-2 outline-none focus:ring-2 focus:ring-purple-400"
                     placeholder="Enter your email"
                   />
                   <ErrorMessage
                     name="email"
                     component="div"
-                    className="text-red-500 text-sm mt-1"
+                    className="mt-1 text-sm text-red-500"
                   />
                 </div>
 
@@ -91,13 +86,13 @@ const DoctorLogin = () => {
                   <Field
                     type="password"
                     name="password"
-                    className="w-full mt-1 px-4 py-2 border border-[#6b6b93] rounded-md focus:ring-2 focus:ring-purple-400 outline-none"
+                    className="mt-1 w-full rounded-md border border-[#6b6b93] px-4 py-2 outline-none focus:ring-2 focus:ring-purple-400"
                     placeholder="Enter your password"
                   />
                   <ErrorMessage
                     name="password"
                     component="div"
-                    className="text-red-500 text-sm mt-1"
+                    className="mt-1 text-sm text-red-500"
                   />
                 </div>
 
@@ -105,7 +100,7 @@ const DoctorLogin = () => {
                 <div className="flex justify-end">
                   <a
                     href="#"
-                    className="text-sm text-[#5b54a4] font-semibold hover:underline"
+                    className="text-sm font-semibold text-[#5b54a4] hover:underline"
                   >
                     Forgot Password?
                   </a>
@@ -115,13 +110,14 @@ const DoctorLogin = () => {
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className={`w-full text-white py-2 rounded-md text-lg font-semibold transition 
-                    ${isSubmitting ? "bg-gray-400 cursor-not-allowed" : "bg-[#5b5cae] hover:bg-[#4c4da0]"}
-                  `}
+                  className={`w-full rounded-md py-2 text-lg font-semibold text-white transition ${
+                    isSubmitting
+                      ? "cursor-not-allowed bg-gray-400"
+                      : "bg-[#5b5cae] hover:bg-[#4c4da0]"
+                  }`}
                 >
                   {isSubmitting ? "Logging in..." : "Login"}
                 </button>
-
               </Form>
             )}
           </Formik>
@@ -129,11 +125,13 @@ const DoctorLogin = () => {
           {/* Register Link */}
           <p className="mt-6 text-center text-sm text-gray-700">
             Don’t have an account?{" "}
-            <Link to="/doctorRegister" className="text-[#4e46c3] font-semibold hover:underline">
+            <Link
+              to="/doctorRegister"
+              className="font-semibold text-[#4e46c3] hover:underline"
+            >
               Register Now
             </Link>
           </p>
-
         </div>
       </div>
     </div>

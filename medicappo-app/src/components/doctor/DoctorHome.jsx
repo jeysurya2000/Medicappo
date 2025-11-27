@@ -9,6 +9,7 @@ import {
 } from "recharts";
 import { FaHome } from "react-icons/fa";
 import { RxDashboard, RxSlash } from "react-icons/rx";
+import { useEffect } from "react";
 const data = [
   { day: "Monday", value: 3000 },
   { day: "Tuesday", value: 3200 },
