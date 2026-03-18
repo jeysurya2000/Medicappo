@@ -54,7 +54,11 @@ const parseTime = (day, month, year, time) => {
 };
 
 const DoctorAppointment = () => {
-  const [currentDate, setCurrentDate] = useState({ month: 10, year: 2025 });
+  const current = new Date();
+  const [currentDate, setCurrentDate] = useState({
+    month: current.getMonth(),
+    year: current.getFullYear(),
+  });
   const { month, year } = currentDate;
   const calendarDays = generateCalendar(year, month);
 

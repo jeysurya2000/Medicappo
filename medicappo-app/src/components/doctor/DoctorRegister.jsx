@@ -176,7 +176,7 @@ const DoctorRegister = () => {
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className={`w-full rounded-md bg-[#5b5cae] py-2 text-lg font-semibold text-white transition ${
+                    className={`w-full rounded-lg bg-[#5b5cae] py-2 text-lg font-semibold text-white transition ${
                       isSubmitting
                         ? "cursor-not-allowed opacity-50"
                         : "hover:bg-[#4c4da0]"

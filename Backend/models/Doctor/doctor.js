@@ -1,14 +1,15 @@
 const mongoose = require("mongoose");
-const DoctorSchema = new mongoose.Schema(
-  {
-    doctorName: { type: String, required: true },
-    designation: { type: String, required: true },
-    email: { type: String, required: true },
-    password: { type: String, required: true },
-    phNo: { type: String, required: true },
-  },
-  { timestamps: true }
-);
 
-const Doctor = mongoose.model("doctor", DoctorSchema);
-module.exports = Doctor;
+const doctorSchema = new mongoose.Schema({
+  doctorName: String,
+  designation: String,
+  email: String,
+  password: String,
+  phNo: String,
+  workingHours: {
+    start: { type: String, default: "09:00" }, // HH:MM
+    end: { type: String, default: "17:00" },
+  },
+});
+
+module.exports = mongoose.model("Doctor", doctorSchema);
